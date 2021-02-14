@@ -2,15 +2,19 @@ import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchBox from "../components/SearchBox"
 import {
-    Box
+    Card, CardContent, Typography, 
 } from '@material-ui/core/';
 import API from '../utils/API';
+import BookBox from "../components/BookBox"
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    textAlign: "left"
+    minWidth: 275,
+    marginBottom: "10px",
+    padding: "20px",
+    marginTop: "20px",
+    backgroundColor: "#131836"
   },
   buttons: {
     marginRight: theme.spacing(2),
@@ -18,7 +22,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left"
   },
   title: {
-    flexGrow: 1,
+    fontSize: 20,
+    textAlign: "left",
+    color: "white"
   },
 }));
 
@@ -46,14 +52,27 @@ export default function Search() {
   }
 
   return (
-    <div className={classes.root}>
+    <div>
       <SearchBox 
-        formDataShown={formData.newItem} 
+        formDataShown={formData.newSearch} 
         handleInputChange={handleInputChange}
         runSearch={runSearch}/>
-      <Box >
+      <Card className={classes.root } variant="outlined">
+        <CardContent>
+          <Typography className={classes.title}>Results:</Typography>
+          { searchResults  ? 
+              searchResults.map((value) => {
+                const {volumeInfo} = value;
+                return (
+                  <BookBox page="search" key={value.id} {...volumeInfo}/>
+                );
+              })
+            :
+            <Typography className={classes.title}><p>Search for a book to get started</p></Typography>   
+          }  
+        </CardContent>
 
-      </Box>
+      </Card>
     </div>
   );
 }
