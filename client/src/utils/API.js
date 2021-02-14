@@ -21,4 +21,7 @@ export default {
   updateBook: function (id, bookData) {
     return axios.put("/api/books/" + id, bookData);
   },
+  getGoogle: function (search) {
+    return axios.get("https://www.googleapis.com/books/v1/volumes?q=" + search + "&apikey=" + process.env.REACT_APP_GOOGLE_API_KEY)
+  }
 };
