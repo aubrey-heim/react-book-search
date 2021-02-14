@@ -9,10 +9,12 @@ import {
   Typography,
   MenuItem,
   IconButton,
+  Container,
 }from '@material-ui/core/';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import { makeStyles } from '@material-ui/core/styles';
+import Jumbotron from './components/Jumbotron';
 
 const classes = makeStyles((theme) => ({
   root: {
@@ -55,17 +57,20 @@ function App() {
           </MenuItem>
         </Toolbar>
       </AppBar>
-      <Router>
-        <Switch>
-          <Route exact path={["/", "/search"]}>
-            <Search />
-          </Route>
-          <Route exact path="/saved">
-            <Saved />
-          </Route>
-        </Switch>
-      </Router>
-
+      
+      <Container>
+        <Jumbotron />
+        <Router>
+          <Switch>
+            <Route exact path={["/", "/search"]}>
+              <Search />
+            </Route>
+            <Route exact path="/saved">
+              <Saved />
+            </Route>
+          </Switch>
+        </Router>
+      </Container>
     </div>
   );
 }
