@@ -12,7 +12,7 @@
 * [Questions](#questions)
     
 ## Description
-This application is created using the React library and JSX, and Express server, and a MongoDB database. Additionally, I utilized the Material-UI framework. This application urilizes the Google Books API so that users can search for books. They are then able to view these books on Google Books, or save them to the database. Users can view their saved books on the "/saved" page, and also delete these books from the list.
+This application is created using the React library and JSX, and Express server, and a MongoDB database. Additionally, I utilized the Material-UI framework. This application utilizes the Google Books API so that users can search for books. They are then able to view these books on Google Books, or save them to the database. Users can view their saved books on the "/saved" page, and also delete these books from the list.
 
 ### Deployed Application
 <img src="./deployed.gif" alt="gif of deployed page in use">
