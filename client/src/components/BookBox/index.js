@@ -6,7 +6,8 @@ import {
     Typography,
     Link,
     Grid,
-    Button
+    Button,
+    ButtonGroup
 } from "@material-ui/core/";
 import PropTypes from "prop-types";
 
@@ -33,7 +34,7 @@ const useStyles = makeStyles({
 
 export default function BookBox(props) {
   const classes = useStyles();
-  const { title, authors, description, infoLink, imageLinks, page} = props;
+  const { title, authors, description, infoLink, imageLinks, page, onSave} = props;
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -42,25 +43,18 @@ export default function BookBox(props) {
             <Grid item xs={12} md={10} style={{marginBottom: "10px"}}>
                 <div>
                     <Link className={classes.title}  href={infoLink}>{title}</Link>
-                    <Typography>Written by {authors.toString()}</Typography>
+                    <Typography>Written by {authors.toString().split(",").join(", ")}</Typography>
                 </div>
             </Grid>
             <Grid item xs={12} md={2} style={{marginBottom: "10px"}}>
-                <Grid container>
-                    <Grid item xs={4} sm={2} md={6}>
-                        <Button variant="contained" color="primary" href={infoLink}>View</Button>
-                    </Grid>
-                    <Grid item xs={4} sm={2} md={6}>
-                        {page==="search" ?
-                          <Button variant="contained" color="primary" href={infoLink}>Save</Button>
-                        :
-                          <Button variant="contained" color="primary" href={infoLink}>Delete</Button>
-                        }
-
-
-                        
-                    </Grid>
-                </Grid>
+                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+                    <Button variant="contained" color="primary" href={infoLink}>View</Button>
+                    {page==="search" ?
+                        <Button variant="contained" color="primary" onClick={() => onSave({...props})}>Save</Button>
+                    :
+                        <Button variant="contained" color="primary" href={infoLink}>Delete</Button>
+                    }
+                </ButtonGroup>
             </Grid>
         </Grid>
         <Grid container>
@@ -78,5 +72,6 @@ BookBox.propTypes = {
     description: PropTypes.string,
     imageLinks: PropTypes.object,
     infoLink: PropTypes.string,
-    page: PropTypes.string
+    page: PropTypes.string,
+    onSave: PropTypes.func,
 };

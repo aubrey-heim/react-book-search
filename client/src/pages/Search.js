@@ -45,10 +45,22 @@ export default function Search() {
     API.getGoogle(formData.newSearch)
     .then(res => {
         setSearchResults(res.data.items)
-        console.log(searchResults)
+        console.log(res.data.items)
     })
     .catch(err => console.log(err))
     setFormData({newSearch: ""})
+  }
+
+  const onSave = (bookInfo) => {
+    API.saveBook({
+      title: bookInfo.title,
+      authors: bookInfo.authors,
+      description: bookInfo.description,
+      image: bookInfo.imageLinks.thumbnail,
+      link: bookInfo.infoLink
+    })
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   }
 
   return (
@@ -64,7 +76,7 @@ export default function Search() {
               searchResults.map((value) => {
                 const {volumeInfo} = value;
                 return (
-                  <BookBox page="search" key={value.id} {...volumeInfo}/>
+                  <BookBox page="search" key={value.id} onSave={onSave} {...volumeInfo}/>
                 );
               })
             :
