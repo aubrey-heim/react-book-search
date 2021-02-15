@@ -56,8 +56,8 @@ export default function Search() {
       title: bookInfo.title,
       authors: bookInfo.authors,
       description: bookInfo.description,
-      image: bookInfo.imageLinks.thumbnail,
-      link: bookInfo.infoLink
+      image: bookInfo.image,
+      link: bookInfo.link
     })
       .then(res => console.log(res))
       .catch(err => console.log(err))
@@ -76,7 +76,8 @@ export default function Search() {
               searchResults.map((value) => {
                 const {volumeInfo} = value;
                 return (
-                  <BookBox page="search" key={value.id} onSave={onSave} {...volumeInfo}/>
+                  <BookBox page="search" key={value.id} onSave={onSave} image={volumeInfo.imageLinks.thumbnail}
+                  link={volumeInfo.infoLink}  {...volumeInfo}/>
                 );
               })
             :

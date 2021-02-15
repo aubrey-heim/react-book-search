@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 
 export default function BookBox(props) {
   const classes = useStyles();
-  const { title, authors, description, infoLink, imageLinks, page, onSave} = props;
+  const { title, authors, description, link, image, page, onSave, bookId, onDelete} = props;
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -42,23 +42,23 @@ export default function BookBox(props) {
         <Grid container>
             <Grid item xs={12} md={10} style={{marginBottom: "10px"}}>
                 <div>
-                    <Link className={classes.title}  href={infoLink}>{title}</Link>
+                    <Link className={classes.title}  href={link}>{title}</Link>
                     <Typography>Written by {authors.toString().split(",").join(", ")}</Typography>
                 </div>
             </Grid>
             <Grid item xs={12} md={2} style={{marginBottom: "10px"}}>
                 <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                    <Button variant="contained" color="primary" href={infoLink}>View</Button>
+                    <Button variant="contained" color="primary" href={link}>View</Button>
                     {page==="search" ?
                         <Button variant="contained" color="primary" onClick={() => onSave({...props})}>Save</Button>
                     :
-                        <Button variant="contained" color="primary" href={infoLink}>Delete</Button>
+                        <Button variant="contained" color="primary" onClick={() => onDelete(bookId)} >Delete</Button>
                     }
                 </ButtonGroup>
             </Grid>
         </Grid>
         <Grid container>
-            <Grid  item md={2}><img src={imageLinks.thumbnail} style={{verticalAlign: "center"}} alt="Book cover" /></Grid>
+            <Grid  item md={2}><img src={image} style={{verticalAlign: "center"}} alt="Book cover" /></Grid>
             <Grid  item md={9}><div style={{marginLeft:"20px", margintop:"20px"}}>{description}</div></Grid>
         </Grid>
       </CardContent>
@@ -70,8 +70,10 @@ BookBox.propTypes = {
     authors: PropTypes.array,
     title: PropTypes.string,
     description: PropTypes.string,
-    imageLinks: PropTypes.object,
-    infoLink: PropTypes.string,
+    image: PropTypes.string,
+    link: PropTypes.string,
     page: PropTypes.string,
     onSave: PropTypes.func,
+    onDelete: PropTypes.func,
+    bookId: PropTypes.string,
 };
