@@ -6,6 +6,9 @@ import {
 } from '@material-ui/core/';
 import API from '../utils/API';
 import BookBox from "../components/BookBox"
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Search() {
+  const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = useState({ newSearch: "" });
   const [searchResults, setSearchResults] = useState([]);
   const classes = useStyles();
@@ -41,11 +45,9 @@ export default function Search() {
 
   const runSearch = (event) => {
     event.preventDefault()
-    console.log(formData)
     API.getGoogle(formData.newSearch)
     .then(res => {
         setSearchResults(res.data.items)
-        console.log(res.data.items)
     })
     .catch(err => console.log(err))
     setFormData({newSearch: ""})
@@ -59,9 +61,17 @@ export default function Search() {
       image: bookInfo.image,
       link: bookInfo.link
     })
-      .then(res => console.log(res))
+      .then(res => setOpen(true))
       .catch(err => console.log(err))
   }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
     <div>
@@ -86,6 +96,23 @@ export default function Search() {
         </CardContent>
 
       </Card>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Book saved!"
+        action={
+          <React.Fragment>
+            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
     </div>
   );
 }
